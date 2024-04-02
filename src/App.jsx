@@ -1,10 +1,16 @@
-import { DatePicker } from "antd";
+import { Layout } from 'antd';
+import AppHeader from './components/layout/AppHeader';
+import AppSider from './components/layout/AppSider';
+import AppContent from './components/layout/AppContent';
 
 export default function App() {
   return (
-    <>
-      <DatePicker/>
-      <h1>Crypto App 8888</h1>
-    </>
+    <Layout>
+      <AppHeader/>
+      <Layout>
+        <AppSider/>
+        <AppContent/>
+      </Layout>
+    </Layout>
   );
 }
