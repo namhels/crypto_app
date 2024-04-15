@@ -1,20 +1,36 @@
-import { Layout, Card } from 'antd';
+import { Layout, Card, Statistic } from "antd";
+import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
 const { Sider } = Layout;
 
 const siderStyle = {
-  padding: '1rem',
+  padding: "1rem",
 };
 
 const AppSider = () => {
-	return (
-		<Sider width="25%" style={siderStyle}>
-			<Card title="Default size card" extra={<a href="#">More</a>} style={{ width: 300 }}>
-      <p>Card content</p>
-      <p>Card content</p>
-      <p>Card content</p>
-    </Card>
-		</Sider>
-	)
-}
+  return (
+    <Sider width="25%" style={siderStyle}>
+      <Card style={{marginBottom: '1rem'}}>
+        <Statistic
+          title="Active"
+          value={11.28}
+          precision={2}
+          valueStyle={{ color: "#3f8600" }}
+          prefix={<ArrowUpOutlined />}
+          suffix="%"
+        />
+      </Card>
+      <Card>
+			<Statistic
+          title="Idle"
+          value={9.3}
+          precision={2}
+          valueStyle={{ color: '#cf1322' }}
+          prefix={<ArrowDownOutlined />}
+          suffix="%"
+        />
+      </Card>
+    </Sider>
+  );
+};
 
-export default AppSider
+export default AppSider;
