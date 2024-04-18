@@ -3,6 +3,7 @@ import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 const { Sider } = Layout;
 import { fakeFetchCrypto, fetchAssets } from '../../api'
+import { percentDifference } from '../../utils'
 
 const siderStyle = {
   padding: "1rem",
@@ -27,7 +28,19 @@ const AppSider = () => {
       const { result } = await fakeFetchCrypto()
       const assets = await fetchAssets()
 
-      setAssets(assets)
+      setAssets(
+        assets.map((asset) => {
+          const coin = result.find((c) => c.id === asset.id)
+          return {
+            grow: asset.price < coin.price,
+            growPercent: percentDifference(asset.price, coin.price),
+            totalAmount: asset.amount * coin.price,
+            totalProfit: asset.amount * coin.price - asset.amount * asset.price,
+            name: coin.name,
+            ...asset,
+          }
+        }
+      ))
       setCrypto(result)
       setLoading(false)
     }
@@ -40,7 +53,8 @@ const AppSider = () => {
 
   return (
     <Sider width="25%" style={siderStyle}>
-      <Card style={{ marginBottom: "1rem" }}>
+      {assets.map((asset) => (
+        <Card key={asset.id} style={{ marginBottom: "1rem" }}>
         <Statistic
           title="Active"
           value={11.28}
@@ -59,16 +73,8 @@ const AppSider = () => {
           )}
         />
       </Card>
-      <Card>
-        <Statistic
-          title="Idle"
-          value={9.3}
-          precision={2}
-          valueStyle={{ color: "#cf1322" }}
-          prefix={<ArrowDownOutlined />}
-          suffix="%"
-        />
-      </Card>
+      ))}
+      
     </Sider>
   );
 };
