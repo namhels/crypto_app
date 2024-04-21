@@ -3,7 +3,7 @@ import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 const { Sider } = Layout;
 import { fakeFetchCrypto, fetchAssets } from "../../api";
-import { percentDifference } from "../../utils";
+import { percentDifference, capitalize } from "../../utils";
 
 const siderStyle = {
   padding: "1rem",
@@ -48,7 +48,7 @@ const AppSider = () => {
       {assets.map((asset) => (
         <Card key={asset.id} style={{ marginBottom: "1rem" }}>
           <Statistic
-            title={asset.id}
+            title={capitalize(asset.id)}
             value={asset.totalAmount}
             precision={2}
             valueStyle={{ color: asset.grow ? "#3f8600" : "#cf1322" }}
@@ -63,7 +63,7 @@ const AppSider = () => {
                 withTag: true,
               },
               { title: "Asset Amount", value: asset.amount, isPlain: true },
-              { title: "Difference", value: asset.growPercent },
+              // { title: "Difference", value: asset.growPercent },
             ]}
             size="small"
             renderItem={(item) => (
